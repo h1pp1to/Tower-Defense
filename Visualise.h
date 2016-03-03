@@ -1,16 +1,25 @@
 #pragma once
 #include <SDL2\SDL.h>
-namespace Visualize
-{
-	SDL_Window* m_Window = nullptr;
-	SDL_Surface* m_Surface = nullptr;
+#include "Singleton.h"
 
-	SDL_Color Color;
+class Visualize
+{
+private:
+	Visualize() = default;
+	Visualize(const Visualize&) = delete;
+	Visualize& operator=(const Visualize&) = delete;
+	SDL_Window* m_Window = nullptr;
+public:
+	static const int WINDOW_WIDTH = 680;
+	static const int WINDOW_HEIGHT = 420;
+	SDL_Surface* m_Surface;
 
 	void Init()
 	{
 		SDL_Init(SDL_INIT_VIDEO);
-		m_Window = SDL_CreateWindow("TOWER DEFENSE", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 420, SDL_WINDOW_SHOWN);
+		m_Window = SDL_CreateWindow("TOWER DEFENSE",
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 		m_Surface = SDL_GetWindowSurface(m_Window);
 	}
 
@@ -24,15 +33,9 @@ namespace Visualize
 		SDL_UpdateWindowSurface(m_Window);
 	}
 
-	void DrawButton(SDL_Rect Rect)
+	static Visualize& Instance()
 	{
-		SDL_FillRect(m_Surface, &Rect, SDL_MapRGB(m_Surface->format, Color.a, Color.b, Color.g));
+		static Visualize *Instance = new Visualize;
+		return *Instance;
 	}
-
-	void CreateColor(int a, int b , int g)
-	{
-		Color.a = a;
-		Color.b = b;
-		Color.g = g;
-	}
-}
+};

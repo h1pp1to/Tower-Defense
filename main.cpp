@@ -1,50 +1,48 @@
-#include <iostream>
-#include "Button.h"
+
+#include "TowerUpdateMenu.h"
 #include "Visualise.h"
-#include <SDL2\SDL.h>
 #undef main
 
 int main()
 {
-	Visualize::Init();
-	SDL_Event e;
-	Mouse mousePos;
-	Button button;
-	Button button2;
+	Visualize::Instance().Init();
 
-	button.CreateButton(100, 100, 100, 100);
-	button2.CreateButton(300, 300, 100, 100);
+	TowerUpdateMenu m_TowerMenu;
+	m_TowerMenu.Init();
 
-	Visualize::CreateColor(131, 211, 22);
-	Visualize::DrawButton(button.GetRect());
-	Visualize::DrawButton(button2.GetRect());
+	bool IsRunning = true;
 
-	bool isRunning = true;
-	
-	while (isRunning)
+	SDL_Event m_Event;
+	while (IsRunning)
 	{
-		while (SDL_PollEvent(&e) != 0)
+		while (SDL_PollEvent(&m_Event))
 		{
-			if (e.type == SDL_QUIT)
+			switch (m_Event.type)
 			{
-				isRunning = false;
-			}
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				SDL_GetMouseState(&mousePos.xMouse, &mousePos.yMouse);
-				if (button.IsClicked(mousePos.xMouse, mousePos.yMouse) || button2.IsClicked(mousePos.xMouse, mousePos.yMouse))
+				case SDL_QUIT:
 				{
-					std::cout << "You clicked me !" << std::endl;
+					IsRunning = false;
+					break;
 				}
+				case SDL_KEYDOWN:
+				{
+					if (m_Event.key.keysym.sym && SDLK_ESCAPE)
+						IsRunning = false;
+					break;
+				}
+				case SDL_MOUSEBUTTONDOWN:
+				{
+					break;
+				}
+				default: break;
 			}
 		}
-		Visualize::UpdateSurface();
-		Visualize::UpdateWindow();
-	}
 
-	
-	SDL_DestroyWindow(Visualize::m_Window);
-	SDL_Quit();
+		m_TowerMenu.DrawTowerMenu();
+
+		Visualize::Instance().UpdateSurface();
+		Visualize::Instance().UpdateWindow();
+	}
 
 	return 0;
 }
