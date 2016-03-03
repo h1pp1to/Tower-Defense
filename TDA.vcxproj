@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\SDL\SDL2-2.0.4\x86_64-w64-mingw32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\SDL\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\ferai\Documents\SDL_Development\SDL_Main_devel\x86_64-w64-mingw32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\ferai\Documents\SDL_Development\SDL_Main_devel\include;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
