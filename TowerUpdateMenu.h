@@ -1,6 +1,7 @@
 #pragma once
 #include "Button.h"
 #include "Doodle.h"
+#include "Tower.h"
 class TowerUpdateMenu 
 {
 private:
@@ -15,6 +16,7 @@ public:
 	~TowerUpdateMenu();
 	
 	void Init();
+	void HandleButtons(int xMouse, int yMouse);
 	void DrawTowerMenu();
 };
 

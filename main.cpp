@@ -1,6 +1,7 @@
 
 #include "TowerUpdateMenu.h"
 #include "Visualise.h"
+#include "Timer.h"
 #undef main
 
 int main()
@@ -15,6 +16,7 @@ int main()
 	SDL_Event m_Event;
 	while (IsRunning)
 	{
+
 		while (SDL_PollEvent(&m_Event))
 		{
 			switch (m_Event.type)
@@ -32,6 +34,8 @@ int main()
 				}
 				case SDL_MOUSEBUTTONDOWN:
 				{
+					m_TowerMenu.HandleButtons(m_Event.button.x, m_Event.button.y);
+					Tower::Instance().DEBUG();
 					break;
 				}
 				default: break;
@@ -42,6 +46,7 @@ int main()
 
 		Visualize::Instance().UpdateSurface();
 		Visualize::Instance().UpdateWindow();
+
 	}
 
 	return 0;

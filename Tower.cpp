@@ -1,26 +1,71 @@
 #include "Tower.h"
 
+//TODO(Borko) - use DRY principle to clean the code
 
-Tower::Tower() :
-Health(10),
-Range(100),
-Damage(1),
-AtackSpeed(std::chrono::milliseconds(1000)),
-TotalCoin(0)
-{}
+void Tower::UpdateHealth()
+{
+	if (GetTotalCoin() - Health.CoinToUpdate >= 0)
+	{
+		Health.UpdateCost();
+		Health.Value += Health.UpdateCounter * 5;
+	}
+}
 
+void Tower::UpdateRange()
+{
+	if (GetTotalCoin() - Range.CoinToUpdate >= 0)
+	{
+		Range.UpdateCost();
+		Range.Value += Range.Value;
+	}
+}
 
-Tower::~Tower(){}
+void Tower::UpdateDamage()
+{
+	if (GetTotalCoin() - Damage.CoinToUpdate >= 0)
+	{
+		Damage.UpdateCost();
+		Damage.Value += Damage.Value;
+	}
+}
 
-void Tower::UpdateHealth(){ Health += 10; }
-void Tower::UpdateRange(){ Range += 10; }
-void Tower::UpdateDamage(){ Damage += 1; }
-void Tower::UpdateAtackSpeed() { AtackSpeed -= std::chrono::milliseconds(50); }
+void Tower::UpdateAtackSpeed()
+{
+	if (GetTotalCoin() - AtackSpeed.CoinToUpdate >= 0)
+	{
+		AtackSpeed.UpdateCost();
+		AtackSpeed.Value -= std::chrono::milliseconds(50);
+	}
+}
 
-int Tower::GetHealth(){ return Health; }
-int Tower::GetRange(){ return Range; }
-int Tower::GetDamage(){ return Damage; }
-std::chrono::milliseconds Tower::GetAtackSpeed(){ return AtackSpeed; }
+int Tower::GetHealth()
+{
+	return Health.Value;
+}
+int Tower::GetRange()
+{
+	return Range.Value;
+}
+int Tower::GetDamage()
+{
+	return Damage.Value;
+}
+std::chrono::milliseconds Tower::GetAtackSpeed()
+{
+	return AtackSpeed.Value;
+}
 
-void Tower::AddCoin(int CoinAmount){ TotalCoin += CoinAmount; }
-int Tower::GetTotalCoin(){ return TotalCoin; }
+void Tower::AddCoin(int CoinAmount)
+{
+	TotalCoin += CoinAmount;
+}
+
+void Tower::TakeCoin(int CoinAmount)
+{
+	TotalCoin = max(0, TotalCoin - CoinAmount);
+}
+
+int Tower::GetTotalCoin()
+{
+	return TotalCoin;
+}
